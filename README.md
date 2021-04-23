@@ -8,9 +8,8 @@
 <br />
 
 <p align="center">
-    <img src="https://www.vectorlogo.zone/logos/angular/angular-icon.svg" alt="Logo" width="80" height="80">
-    <img src="https://www.freeiconspng.com/thumbs/plus-icon/blue-plus-icon-12.png" alt="Logo" width="20" height="20"  style="margin:25px 15px">
-    <img src="https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg" alt="Logo" width="80" height="80">
+  <img src="https://www.vectorlogo.zone/logos/angular/angular-icon.svg" alt="Logo" width="80" height="80">
+  <img src="https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg" alt="Logo" width="80" height="80">
 </p>
 
 <h2 align="center">Yahoo Finance Desktop Client</h3>
