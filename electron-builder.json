@@ -1,0 +1,41 @@
+{
+  "productName": "stock-desktop",
+  "directories": {
+    "output": "release/"
+  },
+  "files": [
+    "**/*",
+    "!**/*.ts",
+    "!.github",
+    "!.vscode",
+    "!.code-workspace",
+    "!*.md",
+    "!package.json",
+    "!package-lock.json",
+    "!src/",
+    "!e2e/",
+    "!hooks/",
+    "!angular.json",
+    "!tsconfig*.json",
+    "!tslint.json",
+    "!.eslintrc.json",
+    "!karma.conf.js",
+    "!angular.webpack.js",
+    "!*.map"
+  ],
+  "win": {
+    "icon": "dist/assets/icons",
+    "target": ["portable"]
+  },
+  "portable": {
+    "splashImage": "dist/assets/icons/electron.bmp"
+  },
+  "mac": {
+    "icon": "dist/assets/icons",
+    "target": ["dmg"]
+  },
+  "linux": {
+    "icon": "dist/assets/icons",
+    "target": ["AppImage"]
+  }
+}
