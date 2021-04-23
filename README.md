@@ -7,9 +7,8 @@
 
 <br />
 
-<div align="center" style="display: flex">
+<div align="center">
   <img src="https://www.vectorlogo.zone/logos/angular/angular-icon.svg" alt="Logo" width="80" height="80">
-  <div style="width: 25px"></div>
   <img src="https://www.vectorlogo.zone/logos/electronjs/electronjs-icon.svg" alt="Logo" width="80" height="80">
 </div>
 
