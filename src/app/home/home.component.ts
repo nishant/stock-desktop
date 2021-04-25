@@ -34,14 +34,14 @@ export class HomeComponent implements OnInit {
 
   onSubmit(): void {
     this.submitted = true;
-
-    // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
+    this.onSuccess();
+  }
 
-    // display form values on success
-    alert(`SUCCESS!! :-)\n\n${JSON.stringify(this.form.value, null, 4)}`);
+  onSuccess(): void {
+    alert(this.value);
   }
 
   onReset(): void {

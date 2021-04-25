@@ -1,45 +1,42 @@
-<div class="home-container">
-  <p class="title">
-    {{ this.translate.PAGES.HOME.TITLE | translate }}
-  </p>
+<div class='center-container'>
+  <div class='home-container'>
+    <h1 class='page-title'>
+      {{ this.translate.PAGES.HOME.TITLE | translate }}
+    </h1>
 
-  <a routerLink="/detail">hello</a>
-  <p>test</p>
-  <label id="stock-input-lable" for="stock-input">Enter a Stock Symbol: </label>
-  <input id="stock-input" type="text">
-  <p>hellllllooooos</p>
-  <a routerLink="/detail">detail page</a><br>
+    <a id='detail-page-link' routerLink='/detail'>
+      {{ this.translate.PAGES.HOME.DETAILS_LINK | translate }}
+    </a><br>
 
+    <p>{{ this.translate.PAGES.HOME.DESCRIPTION | translate }}</p>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-group form-check">
+    <form [formGroup]='form' (ngSubmit)='onSubmit()'>
+      <div class='form-group'>
+        <mat-form-field class='stock-form-field' >
+          <mat-label>{{ this.translate.PAGES.HOME.INPUT_TEXT | translate }}</mat-label>
+          <input matInput required type='text' formControlName='stockSymbol' id='stock-symbol'
+                 placeholder='{{ this.translate.PAGES.HOME.INPUT_PLACEHOLDER | translate }}'
+                 [(ngModel)]='value' [ngClass]="{ 'is-invalid': submitted && f.stockSymbol.errors }">
+          <button mat-button *ngIf='value' matSuffix mat-icon-button aria-label='Clear' (click)="value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
 
-      <mat-form-field class="example-form-field" >
-        <mat-label for="stock-symbol">Clearable input</mat-label>
-        <input matInput required type="text" [(ngModel)]="value" formControlName="stockSymbol" id="stock-symbol" placeholder='AAPL' [ngClass]="{ 'is-invalid': submitted && f.stockSymbol.errors }">
-        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-      <div *ngIf="submitted && f.stockSymbol.errors" class="invalid-input">Stock symbol is required.</div>
+        <div *ngIf='submitted && f.stockSymbol.errors' class='error-container'>
+          <strong  class='input-error-msg'>
+            {{ this.translate.PAGES.HOME.ERROR_MSG | translate }}
+          </strong>
+        </div>
 
-
-
-      <div>
-        <button class="submit-btn">Submit</button>
-        <button class="reset-btn" type="reset" (click)="onReset()">Reset</button>
+        <div class='btn-container'>
+          <button mat-raised-button color='primary' class='submit-btn form-btn' type='submit'>
+            {{ this.translate.PAGES.HOME.SUBMIT_BUTTON | translate }}
+          </button>
+          <button mat-raised-button color='warn' class='reset-btn form-btn' type='reset' (click)='onReset()'>
+            {{ this.translate.PAGES.HOME.RESET_BUTTON | translate }}
+          </button>
+        </div>
       </div>
-    </div>
-  </form>
-
-<!--  <mat-form-field class="example-form-field">-->
-<!--    <mat-label>Clearable input</mat-label>-->
-<!--    <input matInput type="text" [(ngModel)]="value">-->
-<!--    <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">-->
-<!--      <mat-icon>close</mat-icon>-->
-<!--    </button>-->
-<!--  </mat-form-field>-->
+    </form>
+  </div>
 </div>
-
-
-
