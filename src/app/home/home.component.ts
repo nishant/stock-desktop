@@ -9,6 +9,8 @@ import { TypedTranslateService } from '../core/services/translate/typed-translat
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  value = 'Clear Me';
+
   constructor(
     private router: Router,
     public translate: TypedTranslateService,
