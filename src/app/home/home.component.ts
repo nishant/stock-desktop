@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TypedTranslateService } from '../core/services/translate/typed-translate.service';
@@ -34,7 +39,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  async onSubmit(): Promise<void> {
+  onSubmit(): Promise<void> {
     this.submitted = true;
     if (this.form.invalid) {
       return;
@@ -43,9 +48,6 @@ export class HomeComponent implements OnInit {
   }
 
   onSuccess(): void {
-    // const data = this.stockService.fetch( this.value);
-    // alert(JSON.stringify(data));
-    // alert(this.value);
     this.stockService.requestHTML(this.value).subscribe((data) => {
       alert(JSON.stringify(data));
     });
@@ -56,7 +58,7 @@ export class HomeComponent implements OnInit {
     this.form.reset();
   }
 
-  get f() {
+  get f(): { [p: string]: AbstractControl } {
     return this.form.controls;
   }
 }
