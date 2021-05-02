@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { YahooFinanceService } from './yahoo-finance.service';
+import { StockService } from './stock.service';
 
 describe('YahooFinanceService', () => {
-  let service: YahooFinanceService;
+  let service: StockService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(YahooFinanceService);
+    service = TestBed.inject(StockService);
   });
 
   it('should be created', () => {

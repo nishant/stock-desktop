@@ -5,10 +5,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Tile } from '@angular/material/grid-list/tile-coordinator';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { StockData } from '../../../api/yahoo-finance/stock-data';
+import { StockService } from '../core/services/stock/stock.service';
 import { TypedTranslateService } from '../core/services/translate/typed-translate.service';
-import { YahooFinanceService } from '../core/services/yahoo-finance/yahoo-finance.service';
 
 @Component({
   selector: 'app-home',
@@ -22,12 +24,23 @@ export class HomeComponent implements OnInit {
 
   submitted = false;
 
+  renderData = false;
+
+  data: StockData;
+
+  tiles: Tile[] = ([
+    { text: 'One', cols: 3, rows: 1, color: 'lightblue' },
+    { text: 'Two', cols: 1, rows: 2, color: 'lightgreen' },
+    { text: 'Three', cols: 1, rows: 1, color: 'lightpink' },
+    { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' },
+  ] as unknown) as Tile[];
+
   constructor(
     private router: Router,
     public translate: TypedTranslateService,
     private translateService: TranslateService,
     private formBuilder: FormBuilder,
-    private stockService: YahooFinanceService,
+    private stockService: StockService,
   ) {
     this.translateService.setDefaultLang('en');
   }
@@ -48,14 +61,21 @@ export class HomeComponent implements OnInit {
   }
 
   onSuccess(): void {
-    this.stockService.requestHTML(this.value).subscribe((data) => {
-      alert(JSON.stringify(data));
+    this.stockService.fetch(this.value).subscribe((data) => {
+      this.data = data as StockData;
+      this.renderData = true;
+      // this.displayData();
     });
   }
 
   onReset(): void {
     this.submitted = false;
+    this.renderData = false;
     this.form.reset();
+  }
+
+  displayData(): void {
+    alert(JSON.stringify(this.data));
   }
 
   get f(): { [p: string]: AbstractControl } {

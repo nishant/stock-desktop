@@ -1,42 +1,119 @@
+<div class='page-container'>
 <div class='center-container'>
-  <div class='home-container'>
-    <h1 class='page-title'>
-      {{ this.translate.PAGES.HOME.TITLE | translate }}
-    </h1>
+    <div class='home-container'>
+      <h1 class='page-title'>
+        {{ this.translate.PAGES.HOME.TITLE | translate }}
+      </h1>
 
-    <a id='detail-page-link' routerLink='/detail'>
-      {{ this.translate.PAGES.HOME.DETAILS_LINK | translate }}
-    </a><br>
+      <a id='detail-page-link' routerLink='/detail'>
+        {{ this.translate.PAGES.HOME.DETAILS_LINK | translate }}
+      </a><br>
 
-    <p>{{ this.translate.PAGES.HOME.DESCRIPTION | translate }}</p>
+      <p>{{ this.translate.PAGES.HOME.DESCRIPTION | translate }}</p>
 
-    <form [formGroup]='form' (ngSubmit)='onSubmit()'>
-      <div class='form-group'>
-        <mat-form-field class='stock-form-field' >
-          <mat-label>{{ this.translate.PAGES.HOME.INPUT_TEXT | translate }}</mat-label>
-          <input matInput required type='text' formControlName='stockSymbol' id='stock-symbol'
-                 placeholder='{{ this.translate.PAGES.HOME.INPUT_PLACEHOLDER | translate }}'
-                 [(ngModel)]='value' [ngClass]="{ 'is-invalid': submitted && f.stockSymbol.errors }">
-          <button mat-button *ngIf='value' matSuffix mat-icon-button aria-label='Clear' (click)="value=''">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
+      <form [formGroup]='form' (ngSubmit)='onSubmit()'>
+        <div class='form-group'>
+          <mat-form-field class='stock-form-field' >
+            <mat-label>{{ this.translate.PAGES.HOME.INPUT_TEXT | translate }}</mat-label>
+            <input matInput required type='text' formControlName='stockSymbol' id='stock-symbol'
+                   placeholder='{{ this.translate.PAGES.HOME.INPUT_PLACEHOLDER | translate }}'
+                   [(ngModel)]='value' [ngClass]="{ 'is-invalid': submitted && f.stockSymbol.errors }">
+            <button mat-button *ngIf='value' matSuffix mat-icon-button aria-label='Clear' (click)="value=''">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
 
-        <div *ngIf='submitted && f.stockSymbol.errors' class='error-container'>
-          <strong  class='input-error-msg'>
-            {{ this.translate.PAGES.HOME.ERROR_MSG | translate }}
-          </strong>
+          <div *ngIf='submitted && f.stockSymbol.errors' class='error-container'>
+            <strong  class='input-error-msg'>
+              {{ this.translate.PAGES.HOME.ERROR_MSG | translate }}
+            </strong>
+          </div>
+
+          <div class='btn-container'>
+            <button mat-raised-button color='primary' class='submit-btn form-btn' type='submit'>
+              {{ this.translate.PAGES.HOME.SUBMIT_BUTTON | translate }}
+            </button>
+            <button mat-raised-button color='warn' class='reset-btn form-btn' type='reset' (click)='onReset()'>
+              {{ this.translate.PAGES.HOME.RESET_BUTTON | translate }}
+            </button>
+          </div>
         </div>
+      </form>
 
-        <div class='btn-container'>
-          <button mat-raised-button color='primary' class='submit-btn form-btn' type='submit'>
-            {{ this.translate.PAGES.HOME.SUBMIT_BUTTON | translate }}
-          </button>
-          <button mat-raised-button color='warn' class='reset-btn form-btn' type='reset' (click)='onReset()'>
-            {{ this.translate.PAGES.HOME.RESET_BUTTON | translate }}
-          </button>
+<!--      <div *ngIf='renderData' class='stock-data-container'>-->
+<!--        <p *ngFor="let d of data | keyvalue">-->
+<!--          {{d.key}} | {{d.value}}-->
+<!--        </p>-->
+<!--      </div>-->
+
+<!--      Name | Symbol-->
+
+<!--      Currprice | Day changedollar | Day change %-->
+
+<!--      Open | Day range (low) | Day range (high)  | Prev close price-->
+
+<!--      Year range | One year target-->
+
+<!--      Fair value | Chartevent value-->
+
+
+      <div *ngIf='renderData' class='stock-data-container'>
+        <div>
+          <h2 id='stock-name'>{{ data.name}}</h2>
+          <p id='current-price'>{{ data.currentPrice }}</p>
+          <div class='flex-container' id='price-container'>
+            <p id='day-change-dollar'>{{ data.dayChangeDollar }} ($)</p>
+            <p id='day-change-percent'>{{ data.dayChangePercent.slice(0, -1) }} (%)</p>
+          </div>
+
+          <div class='flex-container' id='day-prices'>
+            <div id='open-price' class='price-text'>
+              <p class='right-space'>Open:</p>
+              <p>{{ data.openPrice }}</p>
+            </div>
+            <div id='day-low-price' class='price-text'>
+              <p class='right-space'>Day Low:</p>
+              <p>{{ data.dayRange.split('-')[0].trim() }}</p>
+            </div>
+            <div id='day-high-price' class='price-text'>
+              <p class='right-space'>Day High:</p>
+              <p>{{ data.dayRange.split('-')[1].trim() }}</p>
+            </div>
+            <div id='prev-close-price' class='price-text'>
+              <p class='right-space'>Prev Close:</p>
+              <p>{{ data.previousClosePrice }}</p>
+            </div>
+          </div>
+
+          <div class='flex-container' id='year-prices'>
+            <div id='year-high-price' class='price-text'>
+              <p class='right-space'>1 Year Low:</p>
+              <p>{{ data.yearRange.split('-')[0].trim() }}</p>
+            </div>
+            <div id='year-low-price' class='price-text'>
+              <p class='right-space'>1 Year High:</p>
+              <p>{{ data.yearRange.split('-')[1].trim() }}</p>
+            </div>
+            <div id='year-target-price' class='price-text'>
+              <p class='right-space'>1 Year Target:</p>
+              <p>{{ data.oneYearTarget }}</p>
+            </div>
+          </div>
+
+          <div class='flex-container' id='analysis'>
+            <div id='current-value' class='price-text'>
+              <p class='right-space'>Current Value:</p>
+              <p>{{ data.fairValue}}</p>
+            </div>
+            <div id='current-trend' class='price-text'>
+              <p class='right-space'>Current Trend</p>
+              <p>{{ data.chartEventValue }}</p>
+            </div>
+          </div>
+
+
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
