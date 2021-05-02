@@ -8,10 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
+import { HomeComponent, ScrollToDirective } from './home.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, ScrollToDirective],
   exports: [HomeComponent],
   imports: [
     CommonModule,

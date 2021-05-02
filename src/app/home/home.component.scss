@@ -15,7 +15,7 @@
   margin-right: 20%;
   padding-left: 5%;
   padding-right: 5%;
-  padding-bottom: 24px;
+  margin-bottom: 24px;
   min-height: 100vh;
   box-shadow: -60px 0px 100px -90px white, 60px 0px 100px -90px white;
   background: #ECEFF8;
@@ -37,6 +37,8 @@
   }
 
   .form-group {
+    margin-bottom: 32px;
+
     .stock-form-field {
       width: 200px;
     }
@@ -70,6 +72,14 @@
   }
 
   .stock-data-container {
+    .green {
+      color: green;
+    }
+
+    .red {
+      color: red;
+    }
+
     #stock-name {
       font-size: 24pt;
     }
@@ -82,8 +92,9 @@
       margin-top: -32px;
     }
 
-    .right-space {
+    .data-heading {
       margin-right: 8px;
+      font-weight: bolder;
     }
 
     .price-text {
@@ -106,9 +117,17 @@
       }
     }
 
+    #name-price {
+      box-shadow: 0 -2px 11px rgb(0 0 0 / 25%), 0 5px 8px rgb(0 0 0 / 22%);
+      padding-top: 8px;
+      padding-bottom: 16px    }
+
     #day-prices, #year-prices, #analysis{
       margin-top: 48px;
-
+      box-shadow: 0 -2px 11px rgb(0 0 0 / 25%), 0 5px 8px rgb(0 0 0 / 22%);
+      padding-top: 32px;
+      padding-bottom: 16px
+    ;
       @media (max-width: 767px) {
         flex-direction: column;
         align-items: center;
@@ -118,7 +137,6 @@
     .flex-container {
       display: flex;
       justify-content: center;
-
       p {
         font-size: 12pt;
       }

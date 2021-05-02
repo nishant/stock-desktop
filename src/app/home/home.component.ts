@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Directive,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Tile } from '@angular/material/grid-list/tile-coordinator';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { StockData } from '../../../api/yahoo-finance/stock-data';
@@ -22,18 +27,19 @@ export class HomeComponent implements OnInit {
 
   form: FormGroup;
 
+  // @ViewChild('stockForm') stockForm: ElementRef;
+
   submitted = false;
 
   renderData = false;
 
   data: StockData;
 
-  tiles: Tile[] = ([
-    { text: 'One', cols: 3, rows: 1, color: 'lightblue' },
-    { text: 'Two', cols: 1, rows: 2, color: 'lightgreen' },
-    { text: 'Three', cols: 1, rows: 1, color: 'lightpink' },
-    { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' },
-  ] as unknown) as Tile[];
+  dayChangeColor = '';
+
+  trendColor = '';
+
+  valueColor = '';
 
   constructor(
     private router: Router,
@@ -53,7 +59,9 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(): Promise<void> {
+    this.renderData = false;
     this.submitted = true;
+
     if (this.form.invalid) {
       return;
     }
@@ -63,9 +71,13 @@ export class HomeComponent implements OnInit {
   onSuccess(): void {
     this.stockService.fetch(this.value).subscribe((data) => {
       this.data = data as StockData;
+
+      this.assignCssClasses();
+
       this.renderData = true;
       // this.displayData();
     });
+    // this.stockForm.nativeElement.scrollIntoView();
   }
 
   onReset(): void {
@@ -74,11 +86,62 @@ export class HomeComponent implements OnInit {
     this.form.reset();
   }
 
+  assignCssClasses(): void {
+    // eslint-disable-next-line no-unused-expressions
+    if (this.data.dayChangeDollar) {
+      this.data.dayChangeDollar[0] === '+'
+        ? (this.dayChangeColor = 'green')
+        : (this.dayChangeColor = 'red');
+    }
+
+    if (
+      this.data.chartEventValue &&
+      this.data.chartEventValue !== 'N/A' &&
+      this.data.chartEventValue.toLowerCase().includes('bear')
+    ) {
+      this.trendColor = 'red';
+    }
+
+    if (
+      this.data.chartEventValue &&
+      this.data.chartEventValue !== 'N/A' &&
+      this.data.chartEventValue.toLowerCase().includes('bull')
+    ) {
+      this.trendColor = 'green';
+    }
+
+    if (
+      this.data.fairValue &&
+      this.data.fairValue !== 'N/A' &&
+      this.data.fairValue.toLowerCase().includes('over')
+    ) {
+      this.valueColor = 'red';
+    }
+
+    if (
+      this.data.fairValue &&
+      this.data.fairValue !== 'N/A' &&
+      this.data.fairValue.toLowerCase().includes('under')
+    ) {
+      this.valueColor = 'green';
+    }
+  }
+
   displayData(): void {
     alert(JSON.stringify(this.data));
   }
 
   get f(): { [p: string]: AbstractControl } {
     return this.form.controls;
+  }
+}
+
+@Directive({ selector: '[scrollTo]' }) // eslint-disable-next-line @typescript-eslint/no-unused-vars
+export class ScrollToDirective implements AfterViewInit {
+  // eslint-disable-next-line no-useless-constructor,no-empty-function
+  constructor(private elRef: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.elRef.nativeElement.scrollIntoView();
   }
 }

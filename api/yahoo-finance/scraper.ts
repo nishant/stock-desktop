@@ -82,20 +82,31 @@ export class Scraper {
 
     const exDividendDate = getText(rightTable, DomIds.EX_DIVEND_DATE_VALUE);
 
-    const oneYearTarget = getText(
+    let oneYearTarget = getText(
       rightTable,
       DomIds.ONE_YEAR_TARGET_PRICE_VALUE,
     );
 
+    if (oneYearTarget === undefined || oneYearTarget === '') {
+      oneYearTarget = 'N/A'
+    }
+
     // Other Values
-    const fairValue = getText(fairValueNode, `div:contains('XX'):lt(1)`).split(
+    let fairValue = getText(fairValueNode, `div:contains('XX'):lt(1)`).split(
       'XX',
     )[2];
+
+    if (fairValue === undefined || fairValue === '') {
+      fairValue = 'N/A'
+    }
 
     const patternDetectedNode = chartEventNode.find(
       `span:contains('pattern detected')`,
     );
-    const chartEventValue = patternDetectedNode.prev().text();
+    let chartEventValue = patternDetectedNode.prev().text();
+    if (chartEventValue === undefined || chartEventValue === '') {
+      chartEventValue = 'N/A'
+    }
 
     const stockData: StockData = {
       name,
