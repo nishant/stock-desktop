@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TypedTranslateService } from '../core/services/translate/typed-translate.service';
+import { YahooFinanceService } from '../core/services/yahoo-finance/yahoo-finance.service';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
     public translate: TypedTranslateService,
     private translateService: TranslateService,
     private formBuilder: FormBuilder,
+    private stockService: YahooFinanceService,
   ) {
     this.translateService.setDefaultLang('en');
   }
@@ -32,7 +34,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.submitted = true;
     if (this.form.invalid) {
       return;
@@ -41,7 +43,12 @@ export class HomeComponent implements OnInit {
   }
 
   onSuccess(): void {
-    alert(this.value);
+    // const data = this.stockService.fetch( this.value);
+    // alert(JSON.stringify(data));
+    // alert(this.value);
+    this.stockService.requestHTML(this.value).subscribe((data) => {
+      alert(JSON.stringify(data));
+    });
   }
 
   onReset(): void {

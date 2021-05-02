@@ -1,0 +1,26 @@
+// define enum here
+
+export enum DomIds {
+  HEADER_INFO_ID = '#quote-header-info',
+  MARKET_NOTICE_ID = '#quote-market-notice',
+  FAIR_VALUE_ID = '#fr-val-mod',
+  CHART_EVENT_ID = '#chrt-evts-mod',
+  LEFT_SUMMARY_TABLE = '[data-test="left-summary-table"]',
+  RIGHT_SUMMARY_TABLE = '[data-test="right-summary-table"]',
+  PREV_CLOSE_VALUE = '[data-test="PREV_CLOSE-value"]',
+  OPEN_VALUE = '[data-test="OPEN-value"]',
+  BID_VALUE = '[data-test="BID-value"]',
+  ASK_VALUE = '[data-test="ASK-value"]',
+  DAYS_RANGE_VALUE = '[data-test="DAYS_RANGE-value"]',
+  FIFTY_TWO_WK_RANGE = '[data-test="FIFTY_TWO_WK_RANGE-value"]',
+  TD_VOLUME_VALUE = '[data-test="TD_VOLUME-value"]',
+  AVERAGE_VOLUME_3MONTH_VALUE = '[data-test="AVERAGE_VOLUME_3MONTH-value"]',
+  MARKET_CAP_VALUE = '[data-test="MARKET_CAP-value"]',
+  BETA_5Y_VALUE = '[data-test="BETA_5Y-value"]',
+  PE_RATIO = '[data-test="PE_RATIO-value"]',
+  EPS_RATIO_VALUE = '[data-test="EPS_RATIO-value"]',
+  EARNINGS_DATE_VALUE = '[data-test="EARNINGS_DATE-value"]',
+  DIVIDEND_AND_YIELD_VALUE = '[data-test="DIVIDEND_AND_YIELD-value"]',
+  EX_DIVEND_DATE_VALUE = '[data-test="EX_DIVIDEND_DATE-value"]',
+  ONE_YEAR_TARGET_PRICE_VALUE = '[data-test="ONE_YEAR_TARGET_PRICE-value"]',
+}

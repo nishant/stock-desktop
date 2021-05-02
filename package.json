@@ -31,6 +31,7 @@
     "build": "npm run electron:serve-tsc && ng build --base-href ./",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production",
+    "web": "npm run ng:serve",
     "ng:serve": "ng serve -c web -o",
     "electron:serve-tsc": "tsc -p tsconfig.serve.json",
     "electron:serve": "wait-on tcp:4200 && npm run electron:serve-tsc && npx electron . --serve",
@@ -46,7 +47,8 @@
     "@angular/cdk": "^11.2.10",
     "@angular/forms": "^11.0.0 || ^12.0.0-0",
     "@angular/material": "^11.2.10",
-    "@electron/remote": "1.0.4"
+    "@electron/remote": "1.0.4",
+    "@types/cheerio": "^0.22.28"
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "11.1.1",
