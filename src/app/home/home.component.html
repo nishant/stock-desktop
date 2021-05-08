@@ -1,6 +1,6 @@
 <div class='page-container'>
 <div class='center-container'>
-    <div class='home-container'>
+    <div class='home-container' #homeContainer>
       <h1 class='page-title'>
         {{ this.translate.PAGES.HOME.TITLE | translate }}
       </h1>
@@ -79,11 +79,11 @@
           </div>
 
           <div class='flex-container' id='year-prices'>
-            <div id='year-high-price' class='price-text'>
+            <div id='year-low-price' class='price-text'>
               <p class='data-heading'>1 Year Low:</p>
               <p>{{ data.yearRange.split('-')[0].trim() }}</p>
             </div>
-            <div id='year-low-price' class='price-text'>
+            <div id='year-high-price' class='price-text'>
               <p class='data-heading'>1 Year High:</p>
               <p>{{ data.yearRange.split('-')[1].trim() }}</p>
             </div>
@@ -106,7 +106,20 @@
 
           <div style='height: 48px'></div>
         </div>
+        <div class='trading-view-widgets'>
+          <div style='height: 24px'></div>
+          <trading-view-graph [stockSymbol]='value' [widgetWidth]='homeContainer.offsetWidth'></trading-view-graph>
+          <div style='height: 24px'></div>
+          <trading-view-analysis [stockSymbol]='value'></trading-view-analysis>
+          <div style='height: 24px'></div>
+          <trading-view-fundamental-data [stockSymbol]='value'></trading-view-fundamental-data>
+          <div style='height: 24px'></div>
+          <trading-view-company-profile [stockSymbol]='value' [widgetWidth]='homeContainer.offsetWidth'></trading-view-company-profile>
+        </div>
+
       </div>
+
+      <div style='height: 48px'></div>
     </div>
   </div>
 </div>

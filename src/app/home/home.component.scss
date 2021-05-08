@@ -82,6 +82,7 @@
 
     #stock-name {
       font-size: 24pt;
+
     }
 
     #current-price {
@@ -103,6 +104,9 @@
       justify-content: center;
       min-width: 100px;
       text-align: left;
+      //align-items: flex-start;
+      align-items: center;
+
 
       p {
         margin-top: 0;
@@ -120,13 +124,21 @@
     #name-price {
       box-shadow: 0 -2px 11px rgb(0 0 0 / 25%), 0 5px 8px rgb(0 0 0 / 22%);
       padding-top: 8px;
-      padding-bottom: 16px    }
+      padding-bottom: 16px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    #prev-close-price {
+      //margin-right: 18px;
+    }
 
     #day-prices, #year-prices, #analysis{
       margin-top: 48px;
       box-shadow: 0 -2px 11px rgb(0 0 0 / 25%), 0 5px 8px rgb(0 0 0 / 22%);
       padding-top: 32px;
-      padding-bottom: 16px
+      padding-bottom: 16px;
+      justify-content: space-evenly;
     ;
       @media (max-width: 767px) {
         flex-direction: column;
@@ -148,12 +160,25 @@
       #open-price, #day-low-price, #day-high-price,
       #year-high-price, #year-low-price, #year-target-price,
       #current-value, #current-trend{
-        margin-right: 18px;
+        margin-right: 0;
 
         @media (max-width: 767px) {
           margin-right: 0;
         }
       }
     }
+  }
+}
+
+.trading-view-widgets {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+
+  .trading-view-widget {
+    margin-bottom: 24px;
+    margin-top: 24px;
   }
 }

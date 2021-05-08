@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 import {
   AfterViewInit,
   Component,
@@ -22,12 +23,10 @@ import { TypedTranslateService } from '../core/services/translate/typed-translat
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   value = '';
 
   form: FormGroup;
-
-  // @ViewChild('stockForm') stockForm: ElementRef;
 
   submitted = false;
 
@@ -61,6 +60,9 @@ export class HomeComponent implements OnInit {
   onSubmit(): Promise<void> {
     this.renderData = false;
     this.submitted = true;
+    this.valueColor = '';
+    this.trendColor = '';
+    this.dayChangeColor = '';
 
     if (this.form.invalid) {
       return;
@@ -134,6 +136,10 @@ export class HomeComponent implements OnInit {
   get f(): { [p: string]: AbstractControl } {
     return this.form.controls;
   }
+
+  ngAfterViewInit(): void {
+    // eslint-disable-next-line new-cap,no-new
+  }
 }
 
 @Directive({ selector: '[scrollTo]' }) // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -141,7 +147,7 @@ export class ScrollToDirective implements AfterViewInit {
   // eslint-disable-next-line no-useless-constructor,no-empty-function
   constructor(private elRef: ElementRef) {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.elRef.nativeElement.scrollIntoView();
   }
 }

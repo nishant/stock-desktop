@@ -7,5 +7,6 @@ import { DetailComponent } from './detail.component';
 @NgModule({
   declarations: [DetailComponent],
   imports: [CommonModule, SharedModule, DetailRoutingModule],
+  exports: [DetailComponent],
 })
 export class DetailModule {}

@@ -1,0 +1,10 @@
+#myWidgetContainer {
+  width: 50vw;
+
+  @media (max-width: 1024px) {
+    width: 65vw;
+  }
+  @media (max-width: 767px) {
+    width: 72.5vw;
+  }
+}
