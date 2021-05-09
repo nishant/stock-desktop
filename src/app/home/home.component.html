@@ -41,13 +41,6 @@
         </div>
       </form>
 
-<!--      <div *ngIf='renderData' class='stock-data-container'>-->
-<!--        <p *ngFor="let d of data | keyvalue">-->
-<!--          {{d.key}} | {{d.value}}-->
-<!--        </p>-->
-<!--      </div>-->
-
-
       <div *ngIf='renderData' class='stock-data-container' scrollTo>
         <div>
           <div id='name-price'>
@@ -103,22 +96,18 @@
               <p [ngClass]='trendColor'>{{ data.chartEventValue }}</p>
             </div>
           </div>
-
           <div style='height: 48px'></div>
         </div>
         <div class='trading-view-widgets'>
-          <div style='height: 24px'></div>
-          <trading-view-graph [stockSymbol]='value' [widgetWidth]='homeContainer.offsetWidth'></trading-view-graph>
-          <div style='height: 24px'></div>
-          <trading-view-analysis [stockSymbol]='value'></trading-view-analysis>
-          <div style='height: 24px'></div>
-          <trading-view-fundamental-data [stockSymbol]='value'></trading-view-fundamental-data>
-          <div style='height: 24px'></div>
-          <trading-view-company-profile [stockSymbol]='value' [widgetWidth]='homeContainer.offsetWidth'></trading-view-company-profile>
+          <trading-view-graph [stockSymbol]='value' [exchange]='exchange' [widgetWidth]='homeContainer.offsetWidth'></trading-view-graph>
+          <div style='height: 48px'></div>
+          <trading-view-analysis [stockSymbol]='value' [exchange]='exchange'></trading-view-analysis>
+          <div style='height: 48px'></div>
+          <trading-view-company-profile [stockSymbol]='value'  [exchange]='exchange' [widgetWidth]='homeContainer.offsetWidth'></trading-view-company-profile>
+          <div style='height: 48px'></div>
+          <trading-view-fundamental-data [stockSymbol]='value' [exchange]='exchange'></trading-view-fundamental-data>
         </div>
-
       </div>
-
       <div style='height: 48px'></div>
     </div>
   </div>

@@ -37,10 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.logger = void 0;
 var electron_1 = require("electron");
 var path = require("path");
-var tslog_1 = require("tslog");
 var url = require("url");
 // Initialize remote module
 require('@electron/remote/main').initialize();
@@ -125,10 +123,4 @@ catch (e) {
     // Catch Error
     // throw e;
 }
-/* Logger */
-/* log levels available: silly | trace | debug | info | warn | error | fatal */
-var formatAsJson = false;
-exports.logger = formatAsJson
-    ? new tslog_1.Logger({ type: 'json' })
-    : new tslog_1.Logger();
 //# sourceMappingURL=main.js.map

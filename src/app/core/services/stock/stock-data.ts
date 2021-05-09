@@ -1,5 +1,6 @@
 export interface StockData {
   name: string;
+  exchange: string;
   symbol: string;
   currentPrice: string;
   dayChangeDollar: string;

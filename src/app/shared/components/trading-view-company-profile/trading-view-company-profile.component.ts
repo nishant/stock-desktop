@@ -19,6 +19,8 @@ export class TradingViewCompanyProfileComponent
   @Input()
   src: string;
 
+  @Input() exchange = '';
+
   @Input()
   type: string;
 
@@ -47,12 +49,12 @@ export class TradingViewCompanyProfileComponent
       'https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js';
 
     const scriptContent = {
-      symbol: `NASDAQ:${this.stockSymbol}`,
+      symbol: `${this.exchange}:${this.stockSymbol}`,
       // width: `${Math.floor(this.widgetWidth * 0.83)}`,
       // height: `${Math.floor(this.widgetWidth / 1.7)}`,
       height: 'auto',
       width: '100%',
-      colorTheme: 'dark',
+      colorTheme: 'light',
       isTransparent: false,
       locale: 'en',
     };

@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { StockData } from '../../../api/yahoo-finance/stock-data';
+import { StockData } from '../core/services/stock/stock-data';
 import { StockService } from '../core/services/stock/stock.service';
 import { TypedTranslateService } from '../core/services/translate/typed-translate.service';
 
@@ -40,6 +40,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   valueColor = '';
 
+  exchange = '';
+
   constructor(
     private router: Router,
     public translate: TypedTranslateService,
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.valueColor = '';
     this.trendColor = '';
     this.dayChangeColor = '';
+    this.exchange = '';
 
     if (this.form.invalid) {
       return;
@@ -73,10 +76,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   onSuccess(): void {
     this.stockService.fetch(this.value).subscribe((data) => {
       this.data = data as StockData;
+      this.exchange = '';
 
       this.assignCssClasses();
+      this.getExchange(this.data.exchange.trim());
 
       this.renderData = true;
+      console.log(this.exchange);
       // this.displayData();
     });
     // this.stockForm.nativeElement.scrollIntoView();
@@ -135,6 +141,34 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   get f(): { [p: string]: AbstractControl } {
     return this.form.controls;
+  }
+
+  private getExchange(exchange: string) {
+    console.log(exchange);
+
+    switch (exchange) {
+      case 'NasdaqGS':
+      case 'NasdaqGM':
+      case 'NasdaqCM':
+        this.exchange = 'NASDAQ';
+        break;
+
+      case 'NYSE':
+        this.exchange = 'NYSE';
+        break;
+
+      case 'NYSEArca':
+      case 'BATS':
+        this.exchange = 'AMEX';
+        break;
+
+      case 'Other OTC':
+        this.exchange = 'OTC';
+        break;
+
+      default:
+        this.exchange = 'OTC';
+    }
   }
 
   ngAfterViewInit(): void {

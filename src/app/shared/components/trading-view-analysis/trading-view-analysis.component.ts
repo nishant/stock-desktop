@@ -18,6 +18,8 @@ export class TradingViewAnalysisComponent implements OnInit, AfterViewInit {
   @Input()
   stockSymbol: string;
 
+  @Input() exchange = '';
+
   @Input()
   src: string;
 
@@ -50,10 +52,10 @@ export class TradingViewAnalysisComponent implements OnInit, AfterViewInit {
       // width: 425,
       isTransparent: false,
       // height: 450,
-      symbol: `NASDAQ:${this.stockSymbol}`,
+      symbol: `${this.exchange}:${this.stockSymbol}`,
       showIntervalTabs: true,
       locale: 'en',
-      colorTheme: 'dark',
+      colorTheme: 'light',
     };
 
     script.innerHTML = JSON.stringify(scriptContent);

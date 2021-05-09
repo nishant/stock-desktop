@@ -12,6 +12,8 @@ declare let TradingView: any;
 export class TradingViewGraphComponent implements OnInit, AfterViewInit {
   @Input() stockSymbol = '';
 
+  @Input() exchange = '';
+
   @Input() widgetWidth = 700;
 
   constructor(
@@ -25,14 +27,15 @@ export class TradingViewGraphComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     console.log(this.widgetWidth);
+    console.log(this.exchange.trim(), '!!');
     // eslint-disable-next-line no-new,new-cap
     new TradingView.widget({
       width: 'auto',
       height: Math.floor(this.widgetWidth / 1.4),
-      symbol: `NASDAQ:${this.stockSymbol}`,
+      symbol: `${this.exchange}:${this.stockSymbol}`,
       interval: 'D',
       timezone: 'Etc/UTC',
-      theme: 'dark',
+      theme: 'light',
       style: '1',
       locale: 'en',
       toolbar_bg: '#f1f3f6',

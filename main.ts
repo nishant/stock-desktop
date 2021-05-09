@@ -2,7 +2,6 @@
 
 import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
-import { Logger } from 'tslog';
 import * as url from 'url';
 // Initialize remote module
 require('@electron/remote/main').initialize();
@@ -84,11 +83,3 @@ try {
   // Catch Error
   // throw e;
 }
-
-/* Logger */
-/* log levels available: silly | trace | debug | info | warn | error | fatal */
-const formatAsJson = false;
-
-export const logger: Logger = formatAsJson
-  ? new Logger({ type: 'json' })
-  : new Logger();

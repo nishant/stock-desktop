@@ -19,6 +19,8 @@ implements OnInit, AfterViewInit {
   @Input()
   src: string;
 
+  @Input() exchange = '';
+
   @Input()
   type: string;
 
@@ -45,8 +47,8 @@ implements OnInit, AfterViewInit {
       'https://s3.tradingview.com/external-embedding/embed-widget-financials.js';
 
     const scriptContent = {
-      symbol: `NASDAQ:${this.stockSymbol}`,
-      colorTheme: 'dark',
+      symbol: `${this.exchange}:${this.stockSymbol}`,
+      colorTheme: 'light',
       isTransparent: false,
       largeChartUrl: '',
       displayMode: 'regular',
