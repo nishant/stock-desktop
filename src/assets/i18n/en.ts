@@ -6,7 +6,7 @@ export default {
       DESCRIPTION: 'Enter a stock symbol to view its data from Yahoo Finance.',
       INPUT_INSTRUCTIONS: 'Enter a stock symbol',
       INPUT_PLACEHOLDER: 'AAPL',
-      INPUT_TEXT: 'Stock Symbol',
+      INPUT_TEXT: 'Name or Symbol',
       ERROR_MSG: 'You must provide a stock symbol.',
       SUBMIT_BUTTON: 'Submit',
       RESET_BUTTON: 'Reset',

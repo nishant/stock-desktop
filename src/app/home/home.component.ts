@@ -14,6 +14,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { first } from 'rxjs/operators';
+import { LookupData } from '../core/services/stock/lookup-data';
 import { StockData } from '../core/services/stock/stock-data';
 import { StockService } from '../core/services/stock/stock.service';
 import { TypedTranslateService } from '../core/services/translate/typed-translate.service';
@@ -32,7 +34,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   renderData = false;
 
-  data: StockData;
+  stockData: StockData;
+
+  lookupData: LookupData;
+
+  isChecked = false;
 
   dayChangeColor = '';
 
@@ -56,16 +62,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.form = this.formBuilder.group({
       // eslint-disable-next-line @typescript-eslint/unbound-method
       stockSymbol: [Validators.minLength(1), Validators.pattern(/[a-zA-Z]+/)],
+      lookupCheckbox: [false],
     });
   }
 
   onSubmit(): Promise<void> {
-    this.renderData = false;
     this.submitted = true;
-    this.valueColor = '';
-    this.trendColor = '';
-    this.dayChangeColor = '';
-    this.exchange = '';
+    this.resetRenderData();
 
     if (this.form.invalid) {
       return;
@@ -74,17 +77,46 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   onSuccess(): void {
-    this.stockService.fetch(this.value).subscribe((data) => {
-      this.data = data as StockData;
-      this.exchange = '';
+    if (this.isChecked) {
+      this.stockService
+        .fetchLookupData(this.value)
+        .pipe(first())
+        .subscribe((data) => {
+          this.lookupData = data as LookupData;
+          this.value = this.lookupData.symbol;
+          // this.onSuccess();
+          // this.displayDataFromApi();
 
-      this.assignCssClasses();
-      this.getExchange(this.data.exchange.trim());
+          this.stockService
+            .fetchStockData(this.value)
+            .subscribe((stockData) => {
+              this.stockData = stockData as StockData;
+              this.exchange = '';
 
-      this.renderData = true;
-      console.log(this.exchange);
-      // this.displayData();
-    });
+              this.assignCssClasses();
+              this.getExchange(this.stockData.exchange);
+
+              this.renderData = true;
+              console.log(this.exchange);
+              // this.displayDataFromApi();
+            });
+        });
+    } else {
+      this.stockService.fetchStockData(this.value).subscribe((data) => {
+        this.stockData = data as StockData;
+        this.exchange = '';
+
+        this.assignCssClasses();
+        this.getExchange(this.stockData.exchange);
+
+        this.renderData = true;
+        console.log(this.exchange);
+        // this.displayDataFromApi();
+      });
+    }
+
+    // this.isChecked = false;
+
     // this.stockForm.nativeElement.scrollIntoView();
   }
 
@@ -94,49 +126,58 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.form.reset();
   }
 
+  resetRenderData(): void {
+    this.renderData = false;
+    this.valueColor = '';
+    this.trendColor = '';
+    this.dayChangeColor = '';
+    this.exchange = '';
+  }
+
   assignCssClasses(): void {
     // eslint-disable-next-line no-unused-expressions
-    if (this.data.dayChangeDollar) {
-      this.data.dayChangeDollar[0] === '+'
+    if (this.stockData.dayChangeDollar) {
+      this.stockData.dayChangeDollar[0] === '+'
         ? (this.dayChangeColor = 'green')
         : (this.dayChangeColor = 'red');
     }
 
     if (
-      this.data.chartEventValue &&
-      this.data.chartEventValue !== 'N/A' &&
-      this.data.chartEventValue.toLowerCase().includes('bear')
+      this.stockData.chartEventValue &&
+      this.stockData.chartEventValue !== 'N/A' &&
+      this.stockData.chartEventValue.toLowerCase().includes('bear')
     ) {
       this.trendColor = 'red';
     }
 
     if (
-      this.data.chartEventValue &&
-      this.data.chartEventValue !== 'N/A' &&
-      this.data.chartEventValue.toLowerCase().includes('bull')
+      this.stockData.chartEventValue &&
+      this.stockData.chartEventValue !== 'N/A' &&
+      this.stockData.chartEventValue.toLowerCase().includes('bull')
     ) {
       this.trendColor = 'green';
     }
 
     if (
-      this.data.fairValue &&
-      this.data.fairValue !== 'N/A' &&
-      this.data.fairValue.toLowerCase().includes('over')
+      this.stockData.fairValue &&
+      this.stockData.fairValue !== 'N/A' &&
+      this.stockData.fairValue.toLowerCase().includes('over')
     ) {
       this.valueColor = 'red';
     }
 
     if (
-      this.data.fairValue &&
-      this.data.fairValue !== 'N/A' &&
-      this.data.fairValue.toLowerCase().includes('under')
+      this.stockData.fairValue &&
+      this.stockData.fairValue !== 'N/A' &&
+      this.stockData.fairValue.toLowerCase().includes('under')
     ) {
       this.valueColor = 'green';
     }
   }
 
-  displayData(): void {
-    alert(JSON.stringify(this.data));
+  displayDataFromApi(): void {
+    alert(JSON.stringify(this.stockData));
+    alert(JSON.stringify(this.lookupData));
   }
 
   get f(): { [p: string]: AbstractControl } {
@@ -182,6 +223,10 @@ export class ScrollToDirective implements AfterViewInit {
   constructor(private elRef: ElementRef) {}
 
   ngAfterViewInit(): void {
-    this.elRef.nativeElement.scrollIntoView();
+    // this.elRef.nativeElement.scrollIntoView();
+    const margin = 48;
+    const bounds = this.elRef.nativeElement.getBoundingClientRect();
+
+    window.scrollTo(window.scrollX, bounds.top - margin);
   }
 }

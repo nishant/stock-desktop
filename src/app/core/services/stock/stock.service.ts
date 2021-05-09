@@ -13,10 +13,31 @@ export class StockService {
     this.httpClient = httpClient;
   }
 
-  public fetch(stockSymbol: string): Observable<unknown> {
+  public fetchLookupData(companyName: string): Observable<unknown> {
     try {
       console.log(
-        `[StockService] Scraping HTML for stock symbol '${stockSymbol}'...`,
+        `[StockService] Scraping HTML (lookup data) for company name '${companyName}'...`,
+      );
+      return (
+        this.httpClient
+          .get(`${StockService.BASE_URL}/lookup`, {
+            params: new HttpParams().set('companyName', companyName),
+            responseType: 'json',
+          })
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          .pipe(
+            tap((data) => console.log('[StockService] Fetched data:\n', data)),
+          )
+      );
+    } catch (e: unknown) {
+      throw new Error('Error making GET request!');
+    }
+  }
+
+  public fetchStockData(stockSymbol: string): Observable<unknown> {
+    try {
+      console.log(
+        `[StockService] Scraping HTML (stock data) for stock symbol '${stockSymbol}'...`,
       );
 
       return (

@@ -5,15 +5,15 @@
         {{ this.translate.PAGES.HOME.TITLE | translate }}
       </h1>
 
-      <a id='detail-page-link' routerLink='/detail'>
-        {{ this.translate.PAGES.HOME.DETAILS_LINK | translate }}
-      </a><br>
+<!--      <a id='detail-page-link' routerLink='/detail'>-->
+<!--        {{ this.translate.PAGES.HOME.DETAILS_LINK | translate }}-->
+<!--      </a><br>-->
 
       <p>{{ this.translate.PAGES.HOME.DESCRIPTION | translate }}</p>
 
       <form [formGroup]='form' (ngSubmit)='onSubmit()'>
         <div class='form-group'>
-          <mat-form-field class='stock-form-field' >
+          <mat-form-field class='stock-form-field'>
             <mat-label>{{ this.translate.PAGES.HOME.INPUT_TEXT | translate }}</mat-label>
             <input matInput required type='text' formControlName='stockSymbol' id='stock-symbol'
                    placeholder='{{ this.translate.PAGES.HOME.INPUT_PLACEHOLDER | translate }}'
@@ -30,6 +30,10 @@
             </strong>
           </div>
 
+          <br>
+          <input type='checkbox' formControlName='lookupCheckbox' id="lookup-checkbox" [(ngModel)]="isChecked">
+          <label for="lookup-checkbox" id="lookup-check-label">Using company name instead of symbol?</label>
+
           <div class='btn-container'>
             <button mat-raised-button color='primary' class='submit-btn form-btn' type='submit'>
               {{ this.translate.PAGES.HOME.SUBMIT_BUTTON | translate }}
@@ -44,56 +48,56 @@
       <div *ngIf='renderData' class='stock-data-container' scrollTo>
         <div>
           <div id='name-price'>
-            <h2 id='stock-name'>{{ data.name}}</h2>
-            <p id='current-price' [ngClass]='dayChangeColor'>{{ data.currentPrice }}</p>
+            <h2 id='stock-name'>{{ stockData.name}}</h2>
+            <p id='current-price' [ngClass]='dayChangeColor'>{{ stockData.currentPrice }}</p>
             <div class='flex-container' id='price-container' [ngClass]='dayChangeColor'>
-              <p id='day-change-dollar'>{{ data.dayChangeDollar }} ($)</p>
-              <p id='day-change-percent'>{{ data.dayChangePercent.slice(0, -1) }} (%)</p>
+              <p id='day-change-dollar'>{{ stockData.dayChangeDollar }} ($)</p>
+              <p id='day-change-percent'>{{ stockData.dayChangePercent.slice(0, -1) }} (%)</p>
             </div>
           </div>
 
           <div class='flex-container' id='day-prices'>
             <div id='open-price' class='price-text'>
               <p class='data-heading'>Open:</p>
-              <p>{{ data.openPrice }}</p>
+              <p>{{ stockData.openPrice }}</p>
             </div>
             <div id='day-low-price' class='price-text'>
               <p class='data-heading'>Day Low:</p>
-              <p>{{ data.dayRange.split('-')[0].trim() }}</p>
+              <p>{{ stockData.dayRange.split('-')[0].trim() }}</p>
             </div>
             <div id='day-high-price' class='price-text'>
               <p class='data-heading'>Day High:</p>
-              <p>{{ data.dayRange.split('-')[1].trim() }}</p>
+              <p>{{ stockData.dayRange.split('-')[1].trim() }}</p>
             </div>
             <div id='prev-close-price' class='price-text'>
               <p class='data-heading'>Prev Close:</p>
-              <p>{{ data.previousClosePrice }}</p>
+              <p>{{ stockData.previousClosePrice }}</p>
             </div>
           </div>
 
           <div class='flex-container' id='year-prices'>
             <div id='year-low-price' class='price-text'>
               <p class='data-heading'>1 Year Low:</p>
-              <p>{{ data.yearRange.split('-')[0].trim() }}</p>
+              <p>{{ stockData.yearRange.split('-')[0].trim() }}</p>
             </div>
             <div id='year-high-price' class='price-text'>
               <p class='data-heading'>1 Year High:</p>
-              <p>{{ data.yearRange.split('-')[1].trim() }}</p>
+              <p>{{ stockData.yearRange.split('-')[1].trim() }}</p>
             </div>
             <div id='year-target-price' class='price-text'>
               <p class='data-heading'>1 Year Target:</p>
-              <p>{{ data.oneYearTarget }}</p>
+              <p>{{ stockData.oneYearTarget }}</p>
             </div>
           </div>
 
           <div class='flex-container' id='analysis'>
             <div id='current-value' class='price-text'>
               <p class='data-heading'>Current Value:</p>
-              <p [ngClass]='valueColor'>{{ data.fairValue}}</p>
+              <p [ngClass]='valueColor'>{{ stockData.fairValue}}</p>
             </div>
             <div id='current-trend' class='price-text'>
               <p class='data-heading'>Current Trend:</p>
-              <p [ngClass]='trendColor'>{{ data.chartEventValue }}</p>
+              <p [ngClass]='trendColor'>{{ stockData.chartEventValue }}</p>
             </div>
           </div>
           <div style='height: 48px'></div>
